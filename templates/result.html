@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Prediction Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="title">
+        🧠 AI Prediction Result
+    </h1>
+
+    <p class="subtitle">
+        Hybrid Machine Learning Analysis
+    </p>
+
+    <div class="result-card">
+
+        <p class="result-title">
+            Predicted Fitness Category
+        </p>
+
+        <h2 class="result">
+            {{ result }}
+        </h2>
+
+        <div class="description">
+            <h3>📊 AI Insights</h3>
+
+            <br>
+
+            {% for item in insight_list %}
+
+                <p>{{ item }}</p>
+
+            {% endfor %}
+
+            <br>
+
+            <h3>💡 Recommendation</h3>
+
+            <br>
+
+            <p>
+                {{ recommendation }}
+            </p>
+
+        </div>
+
+            {% if result == "Elite Athlete" %}
+
+                High performance member with
+                intense training habits and
+                excellent physical condition.
+
+            {% elif result == "Advanced Trainer" %}
+
+                Consistent workout routine with
+                strong fitness characteristics.
+
+            {% elif result == "Moderate Fitness" %}
+
+                Balanced physical activity with
+                moderate fitness performance.
+
+            {% else %}
+
+                Beginner level member with
+                lighter workout intensity and
+                developing fitness routine.
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="back-btn">
+
+        <a href="/">
+
+            <button>
+                🔙 Back to Dashboard
+            </button>
+
+        </a>
+
+    </div>
+<div class="chart-container">
+
+    <h3>📈 Fitness Analytics</h3>
+
+    <canvas id="fitnessChart"></canvas>
+
+</div>
+</div>
+<script>
+
+const ctx = document.getElementById('fitnessChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+
+            'BMI',
+            'Calories',
+            'Workout Frequency',
+            'Fat Percentage'
+
+        ],
+
+        datasets: [{
+
+            label: 'Fitness Metrics',
+
+            data: [
+
+                Number("{{ bmi }}"),
+                Number("{{ calories }}"),
+                Number("{{ workout_freq }}"),
+                Number("{{ fat }}")
+
+            ],
+
+            borderWidth: 1
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+
+        scales: {
+
+            x: {
+
+                ticks: {
+                    color: 'white'
+                }
+            },
+
+            y: {
+
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
